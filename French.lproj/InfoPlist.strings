@@ -1,0 +1,4 @@
+/* Console: Localizablestrings for Info Panel */
+
+ApplicationDescription = "Moniteur GNUstep du Journal Système";
+Copyright = "Domaine public";

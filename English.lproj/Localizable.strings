@@ -1,0 +1,42 @@
+/* apps-console: localizable strings */
+
+/* consoleController.m */
+"About Console" = "About Console";
+"System Journal" = "System Journal";
+"Open Log File…" = "Open Log File…";
+"Copy Message" = "Copy Message";
+"Quit Console" = "Quit Console";
+"Console — System Log" = "Console — System Log";
+"Open Log…" = "Open Log…";
+"Pause" = "Pause";
+"Clear" = "Clear";
+"Search" = "Search";
+"Find text in messages, processes, or journal metadata (case insensitive)" = "Find text in messages, processes, or journal metadata (case insensitive)";
+"Process" = "Process";
+"Filter by process name or PID" = "Filter by process name or PID";
+"All levels" = "All levels";
+"Warning and more severe" = "Warning and more severe";
+"Error and more severe" = "Error and more severe";
+"Critical and more severe" = "Critical and more severe";
+"Info and more severe" = "Info and more severe";
+"Debug only" = "Debug only";
+"Time" = "Time";
+"Level" = "Level";
+"Process" = "Process";
+"Message" = "Message";
+"Select a message to inspect its full text and journal fields." = "Select a message to inspect its full text and journal fields.";
+"Connecting…" = "Connecting…";
+"Follow newest" = "Follow newest";
+"Select a message to inspect its full text and journal fields." = "Select a message to inspect its full text and journal fields.";
+"Log reader unavailable. Use Open Log to choose a readable system log." = "Log reader unavailable. Use Open Log to choose a readable system log.";
+"Cannot Read Log" = "Cannot Read Log";
+"Choose a log file you have permission to read." = "Choose a log file you have permission to read.";
+"Skipped an oversized log record." = "Skipped an oversized log record.";
+"Log stream ended. Reopen the source to reconnect." = "Log stream ended. Reopen the source to reconnect.";
+"Select a message to inspect its full text and journal fields." = "Select a message to inspect its full text and journal fields.";
+"Shows logs accessible to your account. The latest 10,000 records are retained." = "Shows logs accessible to your account. The latest 10,000 records are retained.";
+
+"Live" = "Live";
+"Display paused" = "Display paused";
+"%@ · %lu shown / %lu retained%@%@" = "%@ · %lu shown / %lu retained%@%@";
+"Resume" = "Resume";

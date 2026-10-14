@@ -1,0 +1,4 @@
+/* Console: Localizablestrings for Info Panel */
+
+ApplicationDescription = "GNUstep System Log Reader";
+Copyright = "Public Domain";

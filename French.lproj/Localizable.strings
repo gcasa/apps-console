@@ -1,0 +1,40 @@
+/* apps-console: localizable strings */
+
+/* consoleController.m */
+"About Console" = "À propos de la Console";
+"System Journal" = "Journal Système";
+"Open Log File…" = "Ouvrir un journal…";
+"Copy Message" = "Copier le message";
+"Quit Console" = "Quitter la Console";
+"Console — System Log" = "Console — Journal Système";
+"Open Log…" = "Ouvrir…";
+"Pause" = "Pause";
+"Clear" = "Effacer";
+"Search" = "Chercher";
+"Find text in messages, processes, or journal metadata (case insensitive)" = "Motif de recherche dans les messages, processus, ou m\U00E9tadonn\U00E9es du journal (ind\U00E9pendamment de la casse)";
+"Process" = "Processus";
+"Filter by process name or PID" = "Filtrer par nom ou PID de processus";
+"All levels" = "Tous les niveaux";
+"Warning and more severe" = "Avertissement ou plus s\U00E9vère";
+"Error and more severe" = "Erreur et plus s\U00E9vère";
+"Critical and more severe" = "Critique et plus s\U00E9vère";
+"Info and more severe" = "Info et plus s\U00E9vère";
+"Debug only" = "D\U00E9bogage seulement";
+"Time" = "Heure";
+"Level" = "Niveau";
+"Process" = "Processus";
+"Message" = "Message";
+"Select a message to inspect its full text and journal fields." = "S\U00E9lectionner un  message pour inspecter son contenu et les champs du journal.";
+"Connecting…" = "Connexion…";
+"Follow newest" = "Suivre le plus r\U00E9cent";
+"Log reader unavailable. Use Open Log to choose a readable system log." = "Lecteur de journal indisponible. Utiliser Ouvrir un journal afin de choisir une journal lisible.";
+"Cannot Read Log" = "Impossible de  lire le journal";
+"Choose a log file you have permission to read." = "Choisissez un journal que vous êtes habilit\U00E9 à lire.";
+"Skipped an oversized log record." = "Saut\U00E9 un enregistrement hors limite de taille.";
+"Log stream ended. Reopen the source to reconnect." = "Flux de journal termin\U00E9. Rouvrez la source pour vous reconnecter.";
+"Shows logs accessible to your account. The latest 10,000 records are retained." = "Affiche les journaux auxquels vous êtes autoris\U00E9s. Les derniers 10 000 enregistrements sont m\U00E9moris\U00E9s.";
+
+"Live" = "En direct";
+"Display paused" = "Affichage en pause";
+"%@ · %lu shown / %lu retained%@%@" = "%@ · %lu affich\U00E9s / %lu retenus%@%@";
+"Resume" = "Reprendre";

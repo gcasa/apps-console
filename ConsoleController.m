@@ -21,40 +21,40 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
 {
   _entries = [NSMutableArray new]; _visible = [NSMutableArray new]; _pending = [NSMutableData new];
   NSMenu *menu = [[[NSMenu alloc] initWithTitle:@"Console"] autorelease];
-  [menu addItemWithTitle:@"About Console" action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
-  [[menu addItemWithTitle:@"System Journal" action:@selector(openJournal:) keyEquivalent:@"j"] setTarget:self];
-  [[menu addItemWithTitle:@"Open Log File…" action:@selector(openFile:) keyEquivalent:@"o"] setTarget:self];
-  [[menu addItemWithTitle:@"Copy Message" action:@selector(copy:) keyEquivalent:@"c"] setTarget:self];
-  [menu addItemWithTitle:@"Quit Console" action:@selector(terminate:) keyEquivalent:@"q"];
+  [menu addItemWithTitle:_(@"About Console") action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
+  [[menu addItemWithTitle:_(@"System Journal") action:@selector(openJournal:) keyEquivalent:@"j"] setTarget:self];
+  [[menu addItemWithTitle:_(@"Open Log File…") action:@selector(openFile:) keyEquivalent:@"o"] setTarget:self];
+  [[menu addItemWithTitle:_(@"Copy Message") action:@selector(copy:) keyEquivalent:@"c"] setTarget:self];
+  [menu addItemWithTitle:_(@"Quit Console") action:@selector(terminate:) keyEquivalent:@"q"];
   [NSApp setMainMenu:menu];
 
   _window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100, 100, 1060, 700)
     styleMask:NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
     backing:NSBackingStoreBuffered defer:NO];
-  [_window setTitle:@"Console — System Log"]; [_window setMinSize:NSMakeSize(820, 500)];
+  [_window setTitle:_(@"Console — System Log")]; [_window setMinSize:NSMakeSize(820, 500)];
   [_window setReleasedWhenClosed:NO]; [_window setFrameAutosaveName:@"ConsoleWindow"];
   NSView *view = [_window contentView];
   _sourceLabel = Label(view, @"SYSTEM JOURNAL", NSMakeRect(16, 662, 490, 24));
   [_sourceLabel setFont:[NSFont boldSystemFontOfSize:16]];
   [_sourceLabel setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
-  NSButton *journal = Button(view, @"System Journal", NSMakeRect(548, 657, 135, 30), self, @selector(openJournal:));
-  NSButton *open = Button(view, @"Open Log…", NSMakeRect(689, 657, 112, 30), self, @selector(openFile:));
-  _pause = Button(view, @"Pause", NSMakeRect(807, 657, 112, 30), self, @selector(togglePause:));
-  NSButton *clear = Button(view, @"Clear", NSMakeRect(925, 657, 119, 30), self, @selector(clear:));
+  NSButton *journal = Button(view, _(@"System Journal"), NSMakeRect(548, 657, 135, 30), self, @selector(openJournal:));
+  NSButton *open = Button(view, _(@"Open Log…"), NSMakeRect(689, 657, 112, 30), self, @selector(openFile:));
+  _pause = Button(view, _(@"Pause"), NSMakeRect(807, 657, 112, 30), self, @selector(togglePause:));
+  NSButton *clear = Button(view, _(@"Clear"), NSMakeRect(925, 657, 119, 30), self, @selector(clear:));
   for (NSView *button in @[journal, open, _pause, clear]) [button setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
 
-  NSTextField *label = Label(view, @"Search", NSMakeRect(16, 618, 58, 22));
+  NSTextField *label = Label(view, _(@"Search"), NSMakeRect(16, 618, 58, 22));
   [label setAutoresizingMask:NSViewMinYMargin];
   _search = [[[NSTextField alloc] initWithFrame:NSMakeRect(78, 614, 390, 28)] autorelease];
   [_search setDelegate:self]; [_search setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
-  [_search setToolTip:@"Find text in messages, processes, or journal metadata (case insensitive)"]; [view addSubview:_search];
-  label = Label(view, @"Process", NSMakeRect(482, 618, 65, 22));
+  [_search setToolTip:_(@"Find text in messages, processes, or journal metadata (case insensitive)")]; [view addSubview:_search];
+  label = Label(view, _(@"Process"), NSMakeRect(482, 618, 65, 22));
   [label setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
   _process = [[[NSTextField alloc] initWithFrame:NSMakeRect(552, 614, 205, 28)] autorelease];
   [_process setDelegate:self]; [_process setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
-  [_process setToolTip:@"Filter by process name or PID"]; [view addSubview:_process];
+  [_process setToolTip:_(@"Filter by process name or PID")]; [view addSubview:_process];
   _severity = [[[NSPopUpButton alloc] initWithFrame:NSMakeRect(772, 612, 272, 30) pullsDown:NO] autorelease];
-  [_severity addItemsWithTitles:@[@"All levels", @"Warning and more severe", @"Error and more severe", @"Critical and more severe", @"Info and more severe", @"Debug only"]];
+  [_severity addItemsWithTitles:@[_(@"All levels"), _(@"Warning and more severe"), _(@"Error and more severe"), _(@"Critical and more severe"), _(@"Info and more severe"), _(@"Debug only")]];
   [_severity setTarget:self]; [_severity setAction:@selector(filterChanged:)];
   [_severity setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin]; [view addSubview:_severity];
 
@@ -64,7 +64,7 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
   [scroll setHasVerticalScroller:YES]; [scroll setHasHorizontalScroller:YES]; [scroll setBorderType:NSBezelBorder];
   _table = [[[NSTableView alloc] initWithFrame:[scroll bounds]] autorelease];
   NSArray *identifiers = @[@"time", @"severity", @"process", @"message"];
-  NSArray *titles = @[@"Time", @"Level", @"Process", @"Message"];
+  NSArray *titles = @[_(@"Time"), _(@"Level"), _(@"Process"), _(@"Message")];
   CGFloat widths[] = {185, 85, 190, 650};
   for (NSUInteger i = 0; i < [identifiers count]; i++)
     {
@@ -81,10 +81,10 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
   [_detail setAutoresizingMask:NSViewWidthSizable];
   [[_detail textContainer] setWidthTracksTextView:YES];
   [details setDocumentView:_detail]; [split addSubview:details]; [view addSubview:split];
-  [_detail setString:@"Select a message to inspect its full text and journal fields."];
-  _status = Label(view, @"Connecting…", NSMakeRect(16, 14, 830, 24));
+  [_detail setString:_(@"Select a message to inspect its full text and journal fields.")];
+  _status = Label(view, _(@"Connecting…"), NSMakeRect(16, 14, 830, 24));
   [_status setAutoresizingMask:NSViewWidthSizable];
-  _follow = Button(view, @"Follow newest", NSMakeRect(874, 12, 170, 28), self, @selector(followChanged:));
+  _follow = Button(view, _(@"Follow newest"), NSMakeRect(874, 12, 170, 28), self, @selector(followChanged:));
   [_follow setButtonType:NSSwitchButton]; [_follow setState:NSOnState]; [_follow setAutoresizingMask:NSViewMinXMargin];
   [_window makeKeyAndOrderFront:nil];
   _refreshTimer = [[NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(refresh:) userInfo:nil repeats:YES] retain];
@@ -113,12 +113,12 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
 {
   [self stopSource];
   [_entries removeAllObjects]; [_visible removeAllObjects]; [_table reloadData];
-  [_detail setString:@"Select a message to inspect its full text and journal fields."];
+  [_detail setString:_(@"Select a message to inspect its full text and journal fields.")];
   [_diagnostic release]; _diagnostic = nil; _paused = NO; [_pause setTitle:@"Pause"];
   NSString *executable = [self executable:_journal ? @"journalctl" : @"tail"];
   if (!executable)
     {
-      _diagnostic = [@"Log reader unavailable. Use Open Log to choose a readable system log." copy];
+      _diagnostic = [_(@"Log reader unavailable. Use Open Log to choose a readable system log.") copy];
       _dirty = YES; return;
     }
   _task = [NSTask new]; [_task setLaunchPath:executable];
@@ -151,7 +151,7 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
   if ([panel runModal] != NSOKButton) return;
   NSString *path = [panel filename];
   if (![[NSFileManager defaultManager] isReadableFileAtPath:path])
-    { NSRunAlertPanel(@"Cannot Read Log", @"Choose a log file you have permission to read.", @"OK", nil, nil); return; }
+    { NSRunAlertPanel(_(@"Cannot Read Log"), _(@"Choose a log file you have permission to read."), @"OK", nil, nil); return; }
   [_filePath release]; _filePath = [path copy]; _journal = NO;
   [_sourceLabel setStringValue:_filePath]; [self startSource];
 }
@@ -174,10 +174,10 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
       { [self appendLine:[_pending subdataWithRange:NSMakeRange(start, i - start)]]; start = i + 1; }
   if (start) [_pending replaceBytesInRange:NSMakeRange(0, start) withBytes:NULL length:0];
   if (![data length] && [_pending length]) { [self appendLine:_pending]; [_pending setLength:0]; }
-  if ([_pending length] > 4 * 1024 * 1024) { [_pending setLength:0]; [_diagnostic release]; _diagnostic = [@"Skipped an oversized log record." copy]; }
+  if ([_pending length] > 4 * 1024 * 1024) { [_pending setLength:0]; [_diagnostic release]; _diagnostic = [_(@"Skipped an oversized log record.") copy]; }
   if ([_entries count] > 10000) [_entries removeObjectsInRange:NSMakeRange(0, [_entries count] - 10000)];
   if ([data length]) [_output readInBackgroundAndNotify];
-  else if (!_diagnostic) _diagnostic = [@"Log stream ended. Reopen the source to reconnect." copy];
+  else if (!_diagnostic) _diagnostic = [_(@"Log stream ended. Reopen the source to reconnect.") copy];
   _dirty = YES;
 }
 - (void)receivedError:(NSNotification *)notification
@@ -202,7 +202,7 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
   [_table reloadData];
   NSUInteger position = entry ? [_visible indexOfObjectIdenticalTo:entry] : NSNotFound;
   if (position != NSNotFound) [_table selectRowIndexes:[NSIndexSet indexSetWithIndex:position] byExtendingSelection:NO];
-  else { [_table deselectAll:nil]; [_detail setString:@"Select a message to inspect its full text and journal fields."]; }
+  else { [_table deselectAll:nil]; [_detail setString:_(@"Select a message to inspect its full text and journal fields.")]; }
   [entry release];
   if ([_follow state] == NSOnState && [_visible count]) [_table scrollRowToVisible:[_visible count] - 1];
 }
@@ -210,12 +210,12 @@ static NSButton *Button(NSView *parent, NSString *title, NSRect frame, id target
 {
   if (!_dirty) return;
   if (!_paused) { [self rebuild]; _dirty = NO; }
-  [_status setStringValue:[NSString stringWithFormat:@"%@ · %lu shown / %lu retained%@%@", _paused ? @"Display paused" : @"Live", (unsigned long)[_visible count], (unsigned long)[_entries count], [_entries count] == 10000 ? @" (latest 10,000)" : @"", _diagnostic ? [@" · " stringByAppendingString:_diagnostic] : @""]];
-  [_status setToolTip:_diagnostic ?: @"Shows logs accessible to your account. The latest 10,000 records are retained."];
+  [_status setStringValue:[NSString stringWithFormat:_(@"%@ · %lu shown / %lu retained%@%@"), _paused ? _(@"Display paused") : _(@"Live"), (unsigned long)[_visible count], (unsigned long)[_entries count], [_entries count] == 10000 ? @" (latest 10,000)" : @"", _diagnostic ? [@" · " stringByAppendingString:_diagnostic] : @""]];
+  [_status setToolTip:_diagnostic ?: _(@"Shows logs accessible to your account. The latest 10,000 records are retained.")];
 }
 - (void)filterChanged:(id)sender { [self rebuild]; _dirty = YES; [self refresh:nil]; }
 - (void)controlTextDidChange:(NSNotification *)notification { [self filterChanged:nil]; }
-- (void)togglePause:(id)sender { _paused = !_paused; [_pause setTitle:_paused ? @"Resume" : @"Pause"]; _dirty = YES; [self refresh:nil]; }
+- (void)togglePause:(id)sender { _paused = !_paused; [_pause setTitle:_paused ? _(@"Resume") : @"Pause"]; _dirty = YES; [self refresh:nil]; }
 - (void)followChanged:(id)sender { if ([_follow state] == NSOnState && [_visible count]) [_table scrollRowToVisible:[_visible count] - 1]; }
 - (void)clear:(id)sender { [_entries removeAllObjects]; [self rebuild]; _dirty = YES; [self refresh:nil]; }
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)table { return [_visible count]; }

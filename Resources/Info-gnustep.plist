@@ -1,0 +1,9 @@
+{
+  ApplicationName = Console;
+  ApplicationDescription = "GNUstep System Log Reader";
+  ApplicationIcon = Console.png;
+  NSIcon = Console.png;
+  ApplicationRelease = "1.0";
+  Authors = ("Gregory Casamento");
+  Copyright = "Public Domain";
+}
